@@ -13,37 +13,36 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('auth.loginPage') }}">Login</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-          </ul>
-        </li>
+        
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('auth.logOut') }}">Logout!</a>
+          <a class="nav-link">Welcome {{current_user.first_name}}!</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link">{{current_user.username}}</a>
+          <a class="nav-link" href="{{ url_for('api.getProduct') }}"><i class="fa-solid fa-tags"></i> Shop
+            Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('ig.createPost') }}">Create Post</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('ig.feed') }}">My feed</a>
+          <a class="nav-link" href="{{ url_for('auth.loginPage') }}"><i class="fa-solid fa-cart-shopping"></i> My
+            Cart</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ url_for('shop.shop_home') }}">Shop</a>
         </li>
-        
-   
-        {% endif %}
+        <a class="btn btn-outline-success justify-content-end" href="{{ url_for('auth.logOut') }}"
+          role="button">Logout</a>
       </ul>
-    
+
+      {%else%}
+
+      <a class="btn btn-outline-dark justify-content-end" href="{{ url_for('auth.loginPage') }}" role="button">Login</a>
+      <a class="btn btn-outline-dark justify-content-end" href="{{ url_for('auth.registerPage') }}"
+        role="button">Register</a>
+
+      {% endif %}
     </div>
+
   </div>
 </nav>
+        
+   

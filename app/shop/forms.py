@@ -6,7 +6,8 @@ from wtforms.validators import DataRequired
 
 class CreateProdForm(FlaskForm):
     id = StringField('id') 
-    title = StringField("Make", validators = [DataRequired()])
+    product_id = StringField('prod_id') 
+    title = StringField("Title", validators = [DataRequired()])
     price = IntegerField('Price')
     desc = StringField("Description")
     category = StringField("Category")
@@ -18,6 +19,7 @@ class CreateProdForm(FlaskForm):
 
 class UpdateProdForm(FlaskForm):
     id = StringField('id') 
+    product_id = StringField('prod_id') 
     title = StringField('Name of Product')
     price = IntegerField('Price')
     desc = StringField("Description")

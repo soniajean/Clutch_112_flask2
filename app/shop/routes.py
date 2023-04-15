@@ -14,6 +14,7 @@ def createProd():
     form = CreateProdForm()
     if request.method == 'POST':
         if form.validate():
+            product_id = form.id.data
             id = form.id.data
             title = form.title.data
             price = form.price.data
@@ -22,7 +23,7 @@ def createProd():
             img_url = form.img_url.data
             date_created = form.date_created.data
 
-            new = Product(id, title, price, desc, category, img_url, date_created)
+            new = Product(id, product_id, title, price, desc, category, img_url, date_created)
             new.saveProduct()
             flash('Product created!', category='success')
             return redirect(url_for('shop.shop_home'))
@@ -38,6 +39,7 @@ def updateProd(prod_id):
     form = UpdateProdForm()
     prod = Product.query.get(prod_id)
     if request.method == 'POST':
+       product_id = form.product_id.data
        id = form.id.data
        title = form.title.data
        price = form.price.data
@@ -46,6 +48,7 @@ def updateProd(prod_id):
        img_url = form.img_url.data
        date_created = form.date_created.data
 
+       prod.prod_id = product_id
        prod.id = id
        prod.title = title
        prod.price = price
