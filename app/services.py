@@ -1,27 +1,26 @@
 import requests as r
 
 
-def roundDrivers(round):
-    d_list = []
-    x = r.get(f"http://ergast.com/api/f1/2010/{round}/drivers.json")
-    d = x.json()
-    y = d['MRData']['DriverTable']['Drivers']
-    for a in y:
-        d_list.append(a['driverId'])
-    return d_list
-
-
-
-def getDriver(st):
-    x = r.get(f'http://ergast.com/api/f1/drivers/{st}.json')
+def getproducts(products):
+    x = r.get(f'https://fakestoreapi.com/products/{products}')
     d = x.json()
     # print(d)
-    driver = {}
-    first_name = d['MRData']['DriverTable']['Drivers'][0]['givenName']
-    last_name = d['MRData']['DriverTable']['Drivers'][0]['familyName']
-    nation = d['MRData']['DriverTable']['Drivers'][0]['nationality']
-    driver['id'] = st
-    driver['first_name'] = first_name
-    driver['last_name'] = last_name
-    driver['nation'] = nation
-    return driver
+    product = {}
+    id = d['products'][0]['id']
+    title = d['products'][0]['title']
+    price = d['products'][0]['price']
+    description = d['products'][0]['description']
+    category = d['products'][0]['caategory']
+    img_url = d['products'][0]['img_url']
+
+    product['id'] = id
+    product['title'] = title
+    product['price'] = price
+    product['description'] = description
+    product['category'] = category
+    product['img_url'] = img_url
+
+    return product
+    
+
+

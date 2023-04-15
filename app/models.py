@@ -27,13 +27,11 @@ likes = db.Table(
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), nullable=False),
     db.Column('post_id', db.Integer, db.ForeignKey('post.id'), nullable=False)
 )
-
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False, unique=True)
+    username = db.Column(db.String, nullable=False, unique=True)
     email = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False )
     post = db.relationship('Post', backref='author', lazy=True)
     following = db.relationship('User',
         #this is multi-join!
@@ -117,58 +115,34 @@ class Post(db.Model):
 
         }
     
-
-
-class Driver(db.Model):
-    d_id = db.Column(db.Integer, primary_key=True)
-    id = db.Column(db.String(50), nullable=False)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
-    nation = db.Column(db.String)
-
-    def __init__(self, id, first_name, last_name, nation):
-        self.id = id
-        self.first_name = first_name
-        self.last_name = last_name
-        self.nation = nation
-
-    def saveDriver(self):
-        db.session.add(self)
-        db.session.commit()
-
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    make = db.Column(db.String(50), nullable=False)
-    model = db.Column(db.String(50))
-    year = db.Column(db.Integer)
-    miles = db.Column(db.Integer)
-    desc = db.Column(db.String)
-    name = db.Column(db.String)
+    title = db.Column(db.String(100), nullable=False, unique=True )
+    price = db.Column(db.Numeric(10,2))
+    description = db.Column(db.String)
+    category = db.Column(db.String)
     img_url = db.Column(db.String)
-    price = db.Column(db.Integer)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
+    
 
-    def __init__(self, make, model, year, miles, desc, name, img_url, price=0):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.miles = miles
-        self.desc = desc
-        self.name = name
-        self.img_url = img_url
+
+    def __init__(self, id, title, price, description, category, img_url, date_created):
+        self.id = id
+        self.title = title
         self.price = price
+        self.description = description
+        self.category = category
+        self.img_url = img_url
+        self.date_created = date_created
 
     def to_dict(self):
         return {
             'id' : self.id,
-            'make' : self.make,
-            'model' : self.model,
-            'year' : self.year,
-            'miles' : self.miles,
-            'desc' : self.desc,
-            'name' : self.name,
-            'img_url' : self.img_url,
+            'title' : self.title,
             'price' : self.price,
+            'desc' : self.desc,
+            'category' : self.category,
+            'img_url' : self.img_url,
             'date_created' : self.date_created,
         }
     

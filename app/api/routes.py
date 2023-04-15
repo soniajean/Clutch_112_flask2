@@ -79,3 +79,21 @@ def getPostsByUser(user_id):
         'status' : ' NOT ok',
         'message' : 'No posts available to return from that ID'
     }
+
+@api.post('/createproduct')
+def createProductAPI():
+    data = request.json # This coming from the POST request body
+
+    title = data['title']
+    price = data['price']
+    description = data['description']
+    category = data['category']
+    img_url = data['img_url']
+   
+
+    new = Product(title, price, description, category, img_url)
+    new.saveProduct()
+    return {
+        'status' : 'ok',
+        'message' : 'new product has been created!'
+    }

@@ -14,15 +14,15 @@ def createProd():
     form = CreateProdForm()
     if request.method == 'POST':
         if form.validate():
-            make = form.make.data
-            model = form.model.data
-            year = form.year.data
-            miles = form.miles.data
-            desc = form.desc.data
-            name = form.name.data
-            img_url = form.img_url.data
+            id = form.id.data
+            title = form.title.data
             price = form.price.data
-            new = Product(make, model, year, miles, desc, name, img_url, price)
+            desc = form.desc.data
+            category = form.category.data
+            img_url = form.img_url.data
+            date_created = form.date_created.data
+
+            new = Product(id, title, price, desc, category, img_url, date_created)
             new.saveProduct()
             flash('Product created!', category='success')
             return redirect(url_for('shop.shop_home'))
@@ -38,26 +38,24 @@ def updateProd(prod_id):
     form = UpdateProdForm()
     prod = Product.query.get(prod_id)
     if request.method == 'POST':
-        make = form.make.data
-        model = form.model.data
-        year = form.year.data
-        miles = form.miles.data
-        desc = form.desc.data
-        name = form.name.data
-        img_url = form.img_url.data
-        price = form.price.data
+       id = form.id.data
+       title = form.title.data
+       price = form.price.data
+       desc = form.desc.data
+       category = form.category.data
+       img_url = form.img_url.data
+       date_created = form.date_created.data
 
-        prod.make = make
-        prod.model = model
-        prod.year = year
-        prod.miles = miles
-        prod.desc = desc
-        prod.name = name
-        prod.img_url = img_url
-        prod.price = price
-        prod.saveChanges()
-        flash('Product updated!', category='success')
-        return redirect(url_for('shop.indProd', prod_id=prod_id))
+       prod.id = id
+       prod.title = title
+       prod.price = price
+       prod.desc = desc
+       prod.category = category
+       prod.img_url = img_url
+       date_created = date_created
+       prod.saveChanges()
+       flash('Product updated!', category='success')
+       return redirect(url_for('shop.indProd', prod_id=prod_id))
     return render_template('update_prod.html', prod=prod, form=form)
 
 @shop.get('/shop/delete/<int:prod_id>')
